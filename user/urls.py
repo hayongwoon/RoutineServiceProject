@@ -17,7 +17,7 @@ from django.urls import path
 from user.views import CreateUserApiView, UserLoginApiView, UserLogoutApiView
 
 urlpatterns = [
-    path('signup/', CreateUserApiView.as_view()),
-    path('login/', UserLoginApiView.as_view()),
-    path('logout/', UserLogoutApiView.as_view()),
+    path('signup/', CreateUserApiView.as_view(), name='signup'),
+    path('login/', UserLoginApiView.as_view(), name='login'),
+    path('logout/', UserLogoutApiView.as_view(), name='logout'),
 ]
