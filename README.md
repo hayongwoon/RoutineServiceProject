@@ -142,7 +142,7 @@
 <summary>루틴 결과 수정</summary>
     <div markdown="1">
     - endpoint: /routines/results/<br>
-    - method: GET<br>
+    - method: PUT<br>
     - Request = {
         "routine_id": 1,
         "result": "DONE"
