@@ -1,13 +1,10 @@
-import datetime
 from django.urls import reverse
-from django.test.client import encode_multipart, RequestFactory
-from rest_framework.test import APITestCase, APIClient
-from rest_framework import status
+from rest_framework.test import APITestCase
 from routine_result.models import RoutineResult as RoutineResultModel
 
 from user.models import User as UserModel
 from routine.models import Routine as RoutineModel
-from routine.models import RoutineDay as RoutineDayModel
+
 
 class CreateRoutineAPIViewTestCase(APITestCase):
     def setUp(self):

@@ -18,6 +18,6 @@ from routine_result.views import RoutineResultAPIView
 
 
 urlpatterns = [
-    path('', RoutineResultAPIView.as_view()),
+    path('', RoutineResultAPIView.as_view(), name='routine_result'),
    
 ]
