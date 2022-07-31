@@ -18,6 +18,9 @@
 - routine과 routine_result는 OnetoOne 필드로 구성 되어 있고, 루틴 생성 시 해결여부 또한 초기값 **result=NOT**으로 생성 됩니다.
 - 루틴이 생성되고 루틴 결과를 업데이트 하는 유저의 시나리오는 한 주의 시작인 **일요일**에 등록을 하고, 루틴 결과는 루틴 등록 전 지난 주 루틴들에 대해 업데이트(NOT or TRY or DONE)를 함.
 
+## DB DIAGRAM
+<img width="80%" src="https://user-images.githubusercontent.com/40163691/182006940-6ef7851f-fe0e-4f6a-862a-eea7c9706b69.png"/>
+
 ## URI & METHOD
 |API|endpoint|method|
 |------|---------|---|
