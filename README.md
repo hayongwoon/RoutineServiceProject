@@ -49,3 +49,103 @@
     }
     </div>
 </details>
+
+<details>
+<summary>로그인</summary>
+    <div markdown="1">
+    - endpoint: /users/login/<br>
+    - method: POST<br>
+    - Request = {
+    "email": "test@test.com",
+    "password": "test1234!!"
+    }
+    </div>
+</details>
+
+<details>
+<summary>로그아웃</summary>
+    <div markdown="1">
+    - endpoint: /users/logout/<br>
+    - method: POST<br>
+    - Request = None
+    </div>
+</details>
+
+<details>
+<summary>루틴 생성</summary>
+    <div markdown="1">
+    - endpoint: /routines/<br>
+    - method: POST<br>
+    - Request = {
+        "title": "problem solving",
+        "category": "HOMEWORK",
+        "goal": "Increase your problem-solving skills",
+        "is_alarm": true,
+        "get_days_list": ["MON", "WED", "FRI"]
+    }
+    </div>
+</details>
+
+<details>
+<summary>루틴 단일 조회</summary>
+    <div markdown="1">
+    - endpoint: /routines/<br>
+    - method: GET<br>
+    - Request = {
+        "account_id" : 1,
+        "routine_id" : 3
+    }
+    </div>
+</details>
+
+<details>
+<summary>루틴 수정</summary>
+    <div markdown="1">
+    - endpoint: /routines/<br>
+    - method: PUT<br>
+    - Request = {
+        "routine_id" : 5,
+        "title" : "test_put_title",
+        "category" : "MIRACLE",
+        "goal" : "test_put_goal",
+        "is_alarm" : false,
+        "get_days_list" : ["MON"]
+    }
+    </div>
+</details>
+
+<details>
+<summary>루틴 삭제</summary>
+    <div markdown="1">
+    - endpoint: /routines/<br>
+    - method: DELETE<br>
+    - Request = {
+    "account_id" : 1,
+    "routine_id" : 1
+    }
+    </div>
+</details>
+
+<details>
+<summary>특정일 루틴 목록 조회</summary>
+    <div markdown="1">
+    - endpoint: /routines/todo-list/<br>
+    - method: GET<br>
+    - Request = {
+        "account_id" : 1,
+        "today": "2022-07-30"
+    }
+    </div>
+</details>
+
+<details>
+<summary>루틴 결과 수정</summary>
+    <div markdown="1">
+    - endpoint: /routines/results/<br>
+    - method: GET<br>
+    - Request = {
+        "routine_id": 1,
+        "result": "DONE"
+    }
+    </div>
+</details>
