@@ -18,8 +18,8 @@ from routine.views import RoutineAPIView, GetRoutineListAPIView
 
 
 urlpatterns = [
-    path('', RoutineAPIView.as_view()),
-    path('todo-list/', GetRoutineListAPIView.as_view()),
+    path('', RoutineAPIView.as_view(), name='routines'),
+    path('todo-list/', GetRoutineListAPIView.as_view(), name='todo-list'),
     path('results/', include('routine_result.urls')),
    
 ]

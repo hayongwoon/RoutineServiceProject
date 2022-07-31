@@ -94,7 +94,6 @@
     - endpoint: /routines/<br>
     - method: GET<br>
     - Request = {
-        "account_id" : 1,
         "routine_id" : 3
     }
     </div>
@@ -122,7 +121,6 @@
     - endpoint: /routines/<br>
     - method: DELETE<br>
     - Request = {
-    "account_id" : 1,
     "routine_id" : 1
     }
     </div>
