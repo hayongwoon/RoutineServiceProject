@@ -36,15 +36,15 @@
 1. Domain: localhost
 2. Port: 8000
 3. API LIST
-- 회원 가입
 <details>
-<div markdown="1">
-endpoint: /users/signup/
-method: POST
-Request = {
-    "email": "test@test.com",
-    "password": "test1234!!",
-    "username": "하용운"
-}
-</div>
+<summary>회원가입</summary>
+    <div markdown="1">
+    - endpoint: /users/signup/
+    - method: POST
+    - Request = {
+        "email": "test@test.com",
+        "password": "test1234!!",
+        "username": "하용운"
+    }
+    </div>
 </details>
