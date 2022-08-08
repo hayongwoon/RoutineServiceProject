@@ -26,5 +26,5 @@ def routine_queryset_for_this_date(request):
 
     days_queryset_list = list(days_queryset)
     day_object_list = [day.routine for day in days_queryset_list if day.routine.account.id == int(account_id)]
-    
+
     return day_object_list

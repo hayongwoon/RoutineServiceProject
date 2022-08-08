@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from django.urls import reverse
 from rest_framework.test import APITestCase
 
@@ -11,10 +12,10 @@ class CreateRoutineAPIViewTestCase(APITestCase):
         self.data = {'email': 'test@test.com', 'password': 'test1234!!'}
         self.user = UserModel.objects.create_user(**self.data)
         self.client.force_login(self.user)
+        self.url = reverse('routines')
 
 
     def test_create_routine_case(self):
-        url = reverse('routines')
         routine_data = {
             "title": "problem solving",
             "category": "HOMEWORK",
@@ -23,7 +24,7 @@ class CreateRoutineAPIViewTestCase(APITestCase):
             "get_days_list": ["MON", "WED", "FRI"]
         }
 
-        response = self.client.post(url, routine_data)
+        response = self.client.post(self.url, routine_data)
 
         routine = RoutineModel.objects.get(id=1)
         routine_result = RoutineResultModel.objects.get(routine=routine)
@@ -35,7 +36,6 @@ class CreateRoutineAPIViewTestCase(APITestCase):
 
 
     def test_input_category_is_not_in_category_choices_case(self):
-        url = reverse('routines')
         routine_data = {
             "title": "problem solving",
             "category": "NOT HOMEWORK or MIRACLE",
@@ -44,13 +44,12 @@ class CreateRoutineAPIViewTestCase(APITestCase):
             "get_days_list": ["MON", "WED", "FRI"]
         }
 
-        response = self.client.post(url, routine_data)
+        response = self.client.post(self.url, routine_data)
 
         self.assertEqual(response.status_code, 400)
 
 
     def test_title_field_is_blank_case(self):
-        url = reverse('routines')
         routine_data = {
             "title": "",
             "category": "MIRACLE",
@@ -59,13 +58,12 @@ class CreateRoutineAPIViewTestCase(APITestCase):
             "get_days_list": ["MON", "WED", "FRI"]
         }
 
-        response = self.client.post(url, routine_data)
+        response = self.client.post(self.url, routine_data)
 
         self.assertEqual(response.status_code, 400)
 
 
     def test_goal_field_is_blank_case(self):
-        url = reverse('routines')
         routine_data = {
             "title": "problem solving",
             "category": "MIRACLE",
@@ -74,7 +72,7 @@ class CreateRoutineAPIViewTestCase(APITestCase):
             "get_days_list": ["MON", "WED", "FRI"]
         }
 
-        response = self.client.post(url, routine_data)
+        response = self.client.post(self.url, routine_data)
 
         self.assertEqual(response.status_code, 400)
 
@@ -84,8 +82,8 @@ class UpdateRoutineAPIViewTestCase(APITestCase):
         self.data = {'email': 'test@test.com', 'password': 'test1234!!'}
         self.user = UserModel.objects.create_user(**self.data)
         self.client.force_login(self.user)
+        self.url = reverse('routines')
 
-        url = reverse('routines')
         routine_data = {
             "title": "problem solving",
             "category": "HOMEWORK",
@@ -94,11 +92,10 @@ class UpdateRoutineAPIViewTestCase(APITestCase):
             "get_days_list": ["MON", "WED", "FRI"]
         }
 
-        self.client.post(url, routine_data)
+        self.client.post(self.url, routine_data)
 
 
     def test_update_my_routine_title_and_goal_case(self):
-        url = reverse('routines')
         routine_data = {
             "routine_id" : 1,
             "title": "put test title",
@@ -108,7 +105,7 @@ class UpdateRoutineAPIViewTestCase(APITestCase):
             "get_days_list": ["MON", "WED", "FRI"]
         }
 
-        response = self.client.put(url, routine_data)
+        response = self.client.put(self.url, routine_data)
 
         self.assertEqual(response.status_code, 202)
         self.assertEqual(response.data["title"], "put test title")
@@ -116,7 +113,6 @@ class UpdateRoutineAPIViewTestCase(APITestCase):
 
 
     def test_update_my_routine_days_case(self):
-        url = reverse('routines')
         routine_data = {
             "routine_id" : 1,
             "title": "problem solving",
@@ -126,14 +122,13 @@ class UpdateRoutineAPIViewTestCase(APITestCase):
             "get_days_list": ["SUN", "SAT"]
         }
 
-        response = self.client.put(url, routine_data)
+        response = self.client.put(self.url, routine_data)
 
         self.assertEqual(response.status_code, 202)
         self.assertEqual(response.data["days"], ["SUN", "SAT"])
 
 
     def test_update_my_routine_category_case(self):
-        url = reverse('routines')
         routine_data = {
             "routine_id" : 1,
             "title": "problem solving",
@@ -143,7 +138,7 @@ class UpdateRoutineAPIViewTestCase(APITestCase):
             "get_days_list": ["SUN", "SAT"]
         }
 
-        response = self.client.put(url, routine_data)
+        response = self.client.put(self.url, routine_data)
 
         self.assertEqual(response.status_code, 202)
         self.assertEqual(response.data["category"], "MIRACLE")
@@ -154,7 +149,6 @@ class UpdateRoutineAPIViewTestCase(APITestCase):
         self.user = UserModel.objects.create_user(**self.data)
         self.client.force_login(self.user)
 
-        url = reverse('routines')
         routine_data = {
             "routine_id" : 1,
             "title": "problem solving",
@@ -164,7 +158,7 @@ class UpdateRoutineAPIViewTestCase(APITestCase):
             "get_days_list": ["MON", "WED", "FRI"]
         }
 
-        response = self.client.put(url, routine_data)
+        response = self.client.put(self.url, routine_data)
 
         self.assertEqual(response.status_code, 403)
 
@@ -174,8 +168,8 @@ class DeleteRoutineAPIViewTestCase(APITestCase):
         self.data = {'email': 'test@test.com', 'password': 'test1234!!'}
         self.user = UserModel.objects.create_user(**self.data)
         self.client.force_login(self.user)
+        self.url = reverse('routines')
 
-        url = reverse('routines')
         routine_data = {
             "title": "problem solving",
             "category": "HOMEWORK",
@@ -184,17 +178,16 @@ class DeleteRoutineAPIViewTestCase(APITestCase):
             "get_days_list": ["MON", "WED", "FRI"]
         }
 
-        self.client.post(url, routine_data)
+        self.client.post(self.url, routine_data)
 
 
     def test_delete_my_routine_case(self):
-        url = reverse('routines')
         request_data = {
             "account_id" : 1,
             "routine_id" : 1
         }
 
-        response = self.client.delete(url, request_data)
+        response = self.client.delete(self.url, request_data)
         routine = RoutineModel.objects.get(id=request_data["routine_id"])
         routine_result = RoutineResultModel.objects.get(routine=routine)
         
@@ -205,14 +198,13 @@ class DeleteRoutineAPIViewTestCase(APITestCase):
 
 
     def test_cancle_delete_my_routine_case(self):
-        url = reverse('routines')
         request_data = {
             "account_id" : 1,
             "routine_id" : 1
         }
 
-        self.client.delete(url, request_data)
-        response = self.client.delete(url, request_data)
+        self.client.delete(self.url, request_data)
+        response = self.client.delete(self.url, request_data)
 
         routine = RoutineModel.objects.get(id=request_data["routine_id"])
         routine_result = RoutineResultModel.objects.get(routine=routine)
@@ -228,14 +220,101 @@ class DeleteRoutineAPIViewTestCase(APITestCase):
         self.user = UserModel.objects.create_user(**self.data)
         self.client.force_login(self.user)
 
-        url = reverse('routines')
         request_data = {
             "account_id" : 1,
             "routine_id" : 1
         }
 
-        response = self.client.delete(url, request_data)
+        response = self.client.delete(self.url, request_data)
         
         self.assertEqual(response.status_code, 403)
 
 
+class ReadSingleRoutineAPIViewTestCase(APITestCase):
+    def setUp(self):
+        self.data = {'email': 'test@test.com', 'password': 'test1234!!'}
+        self.user = UserModel.objects.create_user(**self.data)
+        self.client.force_login(self.user)
+        self.url = reverse('routines')
+
+        for i in range(1, 5):
+            routine_data = {
+                "title": f"routine_id: {i}, title: problem solving",
+                "category": "HOMEWORK",
+                "goal": "Increase your problem-solving skills",
+                "is_alarm": True,
+                "get_days_list": ["MON", "WED", "FRI"]
+            }
+
+            self.client.post(self.url, routine_data)
+
+
+    def test_read_a_routine_case(self):
+        routine1 = self.client.get(self.url, {"routine_id": 1})
+        routine2 = self.client.get(self.url, {"routine_id": 2})
+
+        self.assertEqual(routine1.status_code, 200)
+        self.assertEqual(routine1.data['title'], "routine_id: 1, title: problem solving")
+        self.assertEqual(routine2.data['title'], "routine_id: 2, title: problem solving")
+
+
+    def test_another_user_read_my_routine_case(self):
+        self.data = {'email': 'another_user@test.com', 'password': 'test1234!!'}
+        self.user = UserModel.objects.create_user(**self.data)
+        self.client.force_login(self.user)
+
+        routine = self.client.get(self.url, {"routine_id": 3})
+
+        self.assertEqual(routine.status_code, 200)
+        self.assertEqual(routine.data['title'], "routine_id: 3, title: problem solving")
+
+        
+class ReadRoutineListAPIViewTestCase(APITestCase):
+    def setUp(self):
+        self.data = {'email': 'test@test.com', 'password': 'test1234!!'}
+        self.user = UserModel.objects.create_user(**self.data)
+        self.client.force_login(self.user)
+        self.url = reverse('todo-list')
+        self.today_date = datetime.now().strftime('%Y-%m-%d')
+
+        day_of_week_dict = {
+            0: ["MON", "WED", "FRI"], # 4개 생성
+            1: ["TUE", "THU", "SAT", "SUN"] # 3개 생성
+        }
+        routines_url = reverse('routines')
+        for i in range(1, 8):
+            routine_data = {
+                "title": f"routine_id: {i}, title: problem solving",
+                "category": "HOMEWORK",
+                "goal": "Increase your problem-solving skills",
+                "is_alarm": True,
+                "get_days_list": day_of_week_dict[i%2]
+            }
+
+            self.client.post(routines_url, routine_data)
+
+
+    def test_read_today_routine_list_case(self):
+        routine_list = self.client.get(self.url, {"account_id": 1, "today": self.today_date})
+        
+        self.assertEqual(routine_list.status_code, 200)
+        for routine in routine_list.data:
+            self.assertEqual(routine['account'], 1)
+        
+    
+    def test_read_routines_created_after_3days_list_case(self):
+        date_3days_after_created_date = (datetime.now() + timedelta(days=3)).strftime('%Y-%m-%d')
+        routine_list = self.client.get(self.url, {"account_id": 1, "today": date_3days_after_created_date})
+
+        self.assertEqual(routine_list.status_code, 200)
+        for routine in routine_list.data:
+            self.assertEqual(routine['account'], 1)
+
+
+    def test_read_routines_created_after_7days_list_case(self):
+        date_3days_after_created_date = (datetime.now() + timedelta(days=7)).strftime('%Y-%m-%d')
+        routine_list = self.client.get(self.url, {"account_id": 1, "today": date_3days_after_created_date})
+
+        self.assertEqual(routine_list.data, [])
+        
+        
