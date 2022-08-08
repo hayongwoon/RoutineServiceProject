@@ -14,8 +14,9 @@ class RoutineAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated, RoutineIsMadeByMePermission]
 
     def get(self, request):
+        routine_id = request.GET.get("routine_id", None)
         try:
-            routine = RoutineModel.objects.filter(id=request.data["routine_id"]).get()
+            routine = RoutineModel.objects.filter(id=routine_id).get()
             return Response(RoutineSerialzer(routine).data, status=status.HTTP_200_OK)
             
         except RoutineModel.DoesNotExist:

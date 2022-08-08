@@ -13,7 +13,9 @@ def convert_today_to_datetime_and_day_of_week(today):
 
 
 def routine_queryset_for_this_date(request):
-    today = request.data['today']
+    today = request.GET.get('today', None)
+    account_id = request.GET.get('account_id', None)
+
     this_day_of_week, today_datetime = convert_today_to_datetime_and_day_of_week(today)
 
     days_queryset = RoutineDayModel.objects.filter(
@@ -23,6 +25,6 @@ def routine_queryset_for_this_date(request):
             )
 
     days_queryset_list = list(days_queryset)
-    day_object_list = [day.routine for day in days_queryset_list if day.routine.account.id == request.data['account_id']]
-
+    day_object_list = [day.routine for day in days_queryset_list if day.routine.account.id == int(account_id)]
+    
     return day_object_list

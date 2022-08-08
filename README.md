@@ -28,10 +28,10 @@
 |로그인|users/login/|POST|
 |로그아웃|users/logout/|POST|
 |루틴 생성|routines/|POST|
-|루틴 단일조회|routines/|GET|
+|루틴 단일조회|routines?routine_id=<id: int>|GET|
 |루틴 수정|routines/|PUT|
 |루틴 삭제|routines/|DELETE|
-|루틴 목록 조회|routines/todo-list/|GET|
+|루틴 목록 조회|routines/todo-list?account_id=<id: int>&today=<date: str>|GET|
 |루틴 결과 수정|routines/result/|PUT|
 
 
