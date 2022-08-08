@@ -1,4 +1,3 @@
-from datetime import datetime
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status, permissions
@@ -10,7 +9,7 @@ from routine_result.models import RoutineResult as RoutineResultModel
 from routine.services import routine_queryset_for_this_date
 from routine.permissions import RoutineIsMadeByMe as RoutineIsMadeByMePermission
 
-# Create your views here.
+
 class RoutineAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated, RoutineIsMadeByMePermission]
 
@@ -22,11 +21,13 @@ class RoutineAPIView(APIView):
         except RoutineModel.DoesNotExist:
             return Response({'message': '존재하지 않는 루틴 입니다.'}, status=status.HTTP_400_BAD_REQUEST)
     
+    
     def post(self, request):
         serializer = RoutineSerialzer(data=request.data, context={'request':request}, partial=True)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
     def put(self, request):
         routine = RoutineModel.objects.get(id=request.data['routine_id'])
@@ -34,6 +35,7 @@ class RoutineAPIView(APIView):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+
 
     def delete(self, request):
         routine = RoutineModel.objects.get(id=request.data['routine_id'])

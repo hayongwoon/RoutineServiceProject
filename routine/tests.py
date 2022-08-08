@@ -1,7 +1,7 @@
 from django.urls import reverse
 from rest_framework.test import APITestCase
-from routine_result.models import RoutineResult as RoutineResultModel
 
+from routine_result.models import RoutineResult as RoutineResultModel
 from user.models import User as UserModel
 from routine.models import Routine as RoutineModel
 
@@ -11,6 +11,7 @@ class CreateRoutineAPIViewTestCase(APITestCase):
         self.data = {'email': 'test@test.com', 'password': 'test1234!!'}
         self.user = UserModel.objects.create_user(**self.data)
         self.client.force_login(self.user)
+
 
     def test_create_routine_case(self):
         url = reverse('routines')
@@ -32,6 +33,7 @@ class CreateRoutineAPIViewTestCase(APITestCase):
         self.assertEqual(routine_result.result, 'NOT')
         self.assertEqual(response.data['days'], ["MON", "WED", "FRI"])
 
+
     def test_input_category_is_not_in_category_choices_case(self):
         url = reverse('routines')
         routine_data = {
@@ -46,6 +48,7 @@ class CreateRoutineAPIViewTestCase(APITestCase):
 
         self.assertEqual(response.status_code, 400)
 
+
     def test_title_field_is_blank_case(self):
         url = reverse('routines')
         routine_data = {
@@ -59,6 +62,7 @@ class CreateRoutineAPIViewTestCase(APITestCase):
         response = self.client.post(url, routine_data)
 
         self.assertEqual(response.status_code, 400)
+
 
     def test_goal_field_is_blank_case(self):
         url = reverse('routines')
@@ -92,6 +96,7 @@ class UpdateRoutineAPIViewTestCase(APITestCase):
 
         self.client.post(url, routine_data)
 
+
     def test_update_my_routine_title_and_goal_case(self):
         url = reverse('routines')
         routine_data = {
@@ -109,6 +114,7 @@ class UpdateRoutineAPIViewTestCase(APITestCase):
         self.assertEqual(response.data["title"], "put test title")
         self.assertEqual(response.data["goal"], "put test goal")
 
+
     def test_update_my_routine_days_case(self):
         url = reverse('routines')
         routine_data = {
@@ -125,6 +131,7 @@ class UpdateRoutineAPIViewTestCase(APITestCase):
         self.assertEqual(response.status_code, 202)
         self.assertEqual(response.data["days"], ["SUN", "SAT"])
 
+
     def test_update_my_routine_category_case(self):
         url = reverse('routines')
         routine_data = {
@@ -140,6 +147,7 @@ class UpdateRoutineAPIViewTestCase(APITestCase):
 
         self.assertEqual(response.status_code, 202)
         self.assertEqual(response.data["category"], "MIRACLE")
+
 
     def test_another_user_try_my_routine_case(self):
         self.data = {'email': 'anotheruser@anotheruser.com', 'password': 'test1234!!'}
@@ -178,6 +186,7 @@ class DeleteRoutineAPIViewTestCase(APITestCase):
 
         self.client.post(url, routine_data)
 
+
     def test_delete_my_routine_case(self):
         url = reverse('routines')
         request_data = {
@@ -193,6 +202,7 @@ class DeleteRoutineAPIViewTestCase(APITestCase):
         self.assertEqual(routine.is_deleted, True)
         self.assertEqual(routine_result.is_deleted, True)
         self.assertEqual(response.data["message"], "삭제 완료!!")
+
 
     def test_cancle_delete_my_routine_case(self):
         url = reverse('routines')
@@ -211,6 +221,7 @@ class DeleteRoutineAPIViewTestCase(APITestCase):
         self.assertEqual(routine.is_deleted, False)
         self.assertEqual(routine_result.is_deleted, False)
         self.assertEqual(response.data["message"], "삭제 취소!!")
+
 
     def test_another_user_delete_my_routine_case(self):
         self.data = {'email': 'anotheruser@anotheruser.com', 'password': 'test1234!!'}

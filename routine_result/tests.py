@@ -23,6 +23,7 @@ class CreateRoutineResultAPIViewTestCase(APITestCase):
 
         self.client.post(url, routine_data)
 
+
     def test_update_routine_result_case(self):
         url = reverse('routine_result')
         routine_result_data = {
@@ -35,6 +36,7 @@ class CreateRoutineResultAPIViewTestCase(APITestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(routine_result.result, 'DONE')
+
 
     def test_anouther_user_update_my_routine_result_case(self):
         self.data = {'email': 'anotheruser@anotheruser.com', 'password': 'test1234!!'}
