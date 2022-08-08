@@ -315,6 +315,7 @@ class ReadRoutineListAPIViewTestCase(APITestCase):
         date_3days_after_created_date = (datetime.now() + timedelta(days=7)).strftime('%Y-%m-%d')
         routine_list = self.client.get(self.url, {"account_id": 1, "today": date_3days_after_created_date})
 
+        self.assertEqual(routine_list.status_code, 200)
         self.assertEqual(routine_list.data, [])
         
         
