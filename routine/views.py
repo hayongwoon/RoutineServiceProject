@@ -35,7 +35,7 @@ class RoutineAPIView(APIView):
         serializer = RoutineSerialzer(routine, data=request.data, partial=True)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+            return Response(serializer.data, status=status.HTTP_200_OK)
 
 
     def delete(self, request):
@@ -43,12 +43,12 @@ class RoutineAPIView(APIView):
         if routine.is_deleted:
             RoutineModel.objects.filter(id=request.data['routine_id']).update(is_deleted=False)
             RoutineResultModel.objects.filter(routine=routine).update(is_deleted=False)
-            return Response({'message': '삭제 취소!!'})
+            return Response({'message': '삭제 취소!!'}, status=status.HTTP_200_OK)
 
         else:
             RoutineModel.objects.filter(id=request.data['routine_id']).update(is_deleted=True)
             RoutineResultModel.objects.filter(routine=routine).update(is_deleted=True)
-            return Response({'message': '삭제 완료!!'})
+            return Response({'message': '삭제 완료!!'}, status=status.HTTP_200_OK)
 
 
 class GetRoutineListAPIView(APIView):
